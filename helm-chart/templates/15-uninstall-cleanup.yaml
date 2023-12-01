@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: delete-secret-job
+  annotations:
+    "helm.sh/hook": pre-delete
+spec:
+  template:
+    spec:
+      containers:
+      - name: kubectl-container
+        image: bitnami/kubectl
+        command: ["kubectl", "delete", "secret", "sh.helm.release.v1.kubeshark.v1"]
+      restartPolicy: Never
